@@ -1,0 +1,47 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.js",
+        "/build/app.js"
+      ],
+      "css": [
+        "/build/app.css"
+      ]
+    },
+    "occasions": {
+      "js": [
+        "/build/runtime.js",
+        "/build/occasions.js"
+      ],
+      "css": [
+        "/build/occasions.css"
+      ]
+    },
+    "account": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/account.css"
+      ]
+    },
+    "base": {
+      "js": [
+        "/build/runtime.js",
+        "/build/base.js"
+      ],
+      "css": [
+        "/build/base.css"
+      ]
+    },
+    "admin": {
+      "js": [
+        "/build/runtime.js"
+      ],
+      "css": [
+        "/build/admin.css"
+      ]
+    }
+  }
+}
