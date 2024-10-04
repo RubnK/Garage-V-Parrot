@@ -13,7 +13,7 @@ Site du Garage V. Parrot, un projet développé avec Symfony 7.
 
 1. Clonez le dépôt :
     ```bash
-    git clone <URL_DU_DEPOT>
+    git clone https://github.com/RubnK/Garage-V-Parrot.git
     cd garage
     ```
 
