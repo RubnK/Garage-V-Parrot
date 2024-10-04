@@ -1,0 +1,87 @@
+body {
+    background-color: #fefafa;
+    font-family: 'Poppins', sans-serif;
+  }
+  a{
+    text-decoration: none;
+    color: black;
+  }
+  
+  /* Header */
+  header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    margin-left: 0px;
+    width: 100%; 
+    background-color: #211d1d;
+    color: white; 
+    padding: 15px 30px;
+    z-index: 1000; 
+    margin-bottom: 10px;
+  }
+  nav {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin-right: 100px;
+  }
+  .logo img {
+    width: 80px;
+  }
+  .logo{
+    transition: 0.2s ease-in-out;
+  }
+  .logo:hover{
+    transform: scale(1.1);
+    transition: 0.2s ease-in-out;
+  }
+  .nav-links ul {
+    display: flex; 
+    list-style: none;
+  }
+  .nav-links ul li {
+    margin-right: 40px; 
+  }
+  .nav-links ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 25px;
+    transition: color 0.3s ease;
+    font-weight: bold;
+  }
+  .nav-links ul li a:hover {
+    color: #f7d0d2; 
+  }
+  .cta {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .cta:hover {
+    color: #f7d0d2; 
+  }
+  .cta svg{
+    height: 60px;
+  }
+  /* End of Header */
+
+  .account-container {
+    margin-top: 4rem;
+    padding: 3rem 0;
+    text-align: center;
+  }
+  .account-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .account-container p {
+    font-size: 1.25rem;
+    color: #6c757d;
+  }
+
+  /*page de connexion*/
+
+  .login{
+    background-color: aqua;
+  }
