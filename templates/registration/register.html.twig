@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Garage V. Parrot{% endblock %}</title>
+<link rel="icon" href="{{ asset('images/logo.png') }}">
+{% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            
+{% endblock %}
+</head>
+{% block body %}
+    <header>
+        <nav>
+            <a href="/" class="logo"><img src="{{ asset('images/logo.png') }}" alt="Logo Garage Parrot"></a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/#offer">Services</a></li>
+                    <li><a href="/occasions">Occasions</a></li>
+                </ul>
+            </div>
+            {% if (is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED')) %}
+                <a href="/account" class="cta">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            {% else %}
+                <a href="/login" class="cta">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            {% endif %}
+
+        </nav>
+    </header>
+    <h1>Inscrivez-vous</h1>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+        {{ form_label(registrationForm.email) }}
+        {{ form_widget(registrationForm.email) }}
+        {{ form_label(registrationForm.plainPassword) }}
+        {{ form_widget(registrationForm.plainPassword, {
+            label: 'Mot de passe'
+        }) }}
+
+        <button type="submit" class="btn">Register</button>
+    {{ form_end(registrationForm) }}
+    <br>
+    <p>Vous avez déjà un compte ? <a href="{{ path('app_login') }}">Connectez-vous</a></p>
+{% endblock %}

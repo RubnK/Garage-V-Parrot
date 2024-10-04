@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Garage V. Parrot{% endblock %}</title>
+<link rel="icon" href="{{ asset('images/logo.png') }}">
+{% block stylesheets %}
+            {{ encore_entry_link_tags('base') }}
+{% endblock %}
+
+{% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            {{ encore_entry_script_tags('base') }}
+            
+{% endblock %}
+</head>
+<body>
+{% block body %}
+    <header>
+        <nav>
+            <a href="/" class="logo"><img src="{{ asset('images/logo.png') }}" alt="Logo Garage Parrot"></a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/#offer">Services</a></li>
+                    <li><a href="/occasions">Occasions</a></li>
+                </ul>
+            </div>
+            {% if (is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED')) %}
+                <a href="/account" class="cta">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            {% else %}
+                <a href="/login" class="cta">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            {% endif %}
+
+        </nav>
+    </header>
+
+<main>
+
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <h1>GARAGE PARROT</h1>
+                <p>L'entretien de vos véhicules depuis 2021</p>
+                <a href="#contact" class="btn">INQUIRE NOW</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="image-container">
+                <img src="https://images.pexels.com/photos/8986139/pexels-photo-8986139.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Repairing a Car">
+            </div>
+            <div class="text-container">
+                <h2>RÉPARER, C'EST PRENDRE SOIN</h2>
+                <p>
+                    Miles' Garage appartient en fait à Miles – un gars joyeux avec une obsession presque folle pour les voitures. 
+                    Lui et son équipe de spécialistes ont appris à traduire cette nature obsessionnelle en un service impressionnant, 
+                    réparer des automobiles avec tant de finesse, c'est presque une forme d'art
+                </p>
+                <p>
+                    Miles et le reste de son garage s'engagent à prendre soin des voitures avec un service et des réparations de premier ordre, 
+                    parce que plus une voiture dure longtemps, mieux c'est pour vous, pour l'environnement et pour votre automobile bien-aimée.
+
+                </p>
+            </div>
+        </section>
+
+        <section id="offer">
+            <h2>Nos Offres</h2>
+            <div class="offer-container">
+                {% for service in services %}
+                <div class="offer-box">
+                    <div class="flip-card">
+                        <div class="flip-card-inner">
+                            <div class="flip-card-front">
+                                <img src="{{ asset('images/services/' ~ service.photo) }}" alt="{{service.name}}">
+                                <div class="red-bar">
+                                    <h3>{{service.name}}</h3>
+                                    <p>{{service.description}}</p>
+                                </div>
+                            </div>
+                            <div class="flip-card-back">
+                                <h3>{{service.name}}</h3>
+                                <p> {{service.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+
+    <section id="contact" class="contact-section">
+        <h2>Contact</h2>
+    
+        <div class="contact-grid">
+            <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <h3>Téléphone</h3>
+                <p>+33 1 46 34 56 78</p>
+            </div>
+    
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <h3>Email</h3>
+                <p>contact@garageparrot.fr</p>
+            </div>
+    
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>Adresse</h3>
+                <p>123 Rue de la Mécanique, 75000 Paris, France</p>
+            </div>
+        </div>
+    
+        <!-- Bouton "Nous Contacter" -->
+        <!-- <div class="contact-action">
+            <a href="#contact-form" class="contact-btn">Nous Contacter</a>
+        </div> -->
+    </section>
+    
+
+    <!-- Bouton de contact flottant en bas à droite -->
+<div class="floating-contact-btn" id="contactBtn">
+    <i class="fas fa-envelope"></i>
+    <span>Contactez-nous</span>
+</div>
+
+<!-- Formulaire de contact caché -->
+<div class="contact-form-popup" id="contactForm">
+    <div class="form-container">
+        <span class="close-btn" id="closeForm">&times;</span>
+        <h2>Contactez-nous</h2>
+        <form action="#" method="post">
+            <div class="form-group">
+                <label for="name">Nom</label>
+                <input type="text" id="name" name="name" placeholder="Votre Nom" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Votre Email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Votre Message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Envoyer</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Section FAQ -->
+<section id="faq" class="faq-section">
+    <h2>Foire aux questions</h2>
+    <div class="faq-container">
+        <div class="faq-box">
+            <h3>À quelle fréquence dois-je faire entretenir ma voiture ?</h3>
+            <p>Nous recommandons d'entretenir votre voiture tous les 6 mois ou tous les 10 000 kilomètres, selon la première échéance.</p>
+        </div>
+        <div class="faq-box">
+            <h3>Quels types de voitures réparez-vous ?</h3>
+            <p>Nous travaillons avec toutes les grandes marques, y compris les constructeurs européens, américains et asiatiques.</p>
+        </div>
+        <div class="faq-box">
+            <h3>Proposez-vous des services de réparation d'urgence ?</h3>
+            <p>Oui, nous offrons des services de réparation d'urgence 24/7. Vous pouvez nous appeler à tout moment pour une assistance immédiate.</p>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+<!-- Section Témoignages -->
+<section id="temoignages">
+    <h2>Ce que disent nos clients</h2>
+    <div class="temoignage-container">
+        <!-- Témoignages approuvés seront affichés ici -->
+        {% for review in reviews %}
+            {% if review.approved == 1 %}
+                <div class="temoignage-box">
+                    <p>« {{ review.comment }} »</p>
+                    <h3>- {{ review.name }}</h3>
+                    <div class="stars">
+                        {% for i in 1..review.note %}
+                            ⭐
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+
+
+<!-- Formulaire d'ajout de témoignage -->
+        
+<section id="ajout-temoignage">
+    <h2>Laisser un témoignage</h2>
+    {{ form_start(reviewForm) }}
+        <div class="form-group">
+            {{ form_widget(reviewForm.name, { 'attr': { 'id': 'nom', 'placeholder': 'Nom' } }) }}
+            {{ form_widget(reviewForm.note, { 'attr': { 'id': 'note' } }) }}
+        </div>
+        
+        {{ form_widget(reviewForm.comment, { 'attr': { 'id': 'commentaire', 'placeholder': 'Laisse-nous un commentaire...' } }) }}
+        {{ form_widget(reviewForm.approved, { 'attr': { 'style': 'display:none;' }, 'value': 0 }) }}
+        <button type="submit">Envoyer</button>
+    {{ form_end(reviewForm) }}
+</section>
+
+<!-- Section de modération -->
+<section id="horaires">
+    <h2>Horaires</h2>
+    <div class="horaires-container">
+        {% for horaire in horaires %}
+            <div class="horaire-box">
+                <h3>
+                    {% if horaire.jour == 1 %}
+                        Lundi
+                    {% elseif horaire.jour == 2 %}
+                        Mardi
+                    {% elseif horaire.jour == 3 %}
+                        Mercredi
+                    {% elseif horaire.jour == 4 %}
+                        Jeudi
+                    {% elseif horaire.jour == 5 %}
+                        Vendredi
+                    {% elseif horaire.jour == 6 %}
+                        Samedi
+                    {% elseif horaire.jour == 7 %}
+                        Dimanche
+                    {% endif %}
+                </h3>
+                {% if horaire.closed %}
+                    <p>Fermé</p>
+                {% else %}
+                    <p>{{ horaire.ouverture|date('H:i') }} - {{ horaire.fermeture|date('H:i') }}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+</main>
+
+
+    
+{% endblock %}
+</body>
+</html>

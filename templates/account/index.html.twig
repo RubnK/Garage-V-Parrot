@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Garage V. Parrot{% endblock %}</title>
+<link rel="icon" href="{{ asset('images/logo.png') }}">
+{% block stylesheets %}
+            {{ encore_entry_link_tags('account') }}
+{% endblock %}
+
+{% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            
+{% endblock %}
+</head>
+<body>
+{% block body %}
+    <header>
+        <nav>
+            <a href="/" class="logo"><img src="{{ asset('images/logo.png') }}" alt="Logo Garage Parrot"></a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/#offer">Services</a></li>
+                    <li><a href="/occasions">Occasions</a></li>
+                </ul>
+            </div>
+            {% if (is_granted('ROLE_ADMIN') or is_granted('ROLE_USER')) %}
+                <a href="/account" class="cta">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            {% else %}
+                <a href="/login" class="cta">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            {% endif %}
+
+        </nav>
+    </header>
+    <div class="account-container">
+        <h1>Mon Compte</h1>
+        <div class="account-actions">
+            <a href="{{ path('app_logout') }}" class="btn btn-danger">Se Déconnecter</a>
+        </div>
+        <div class="account-details">
+            <h2>Mes Informations</h2>
+            <p><strong>Email:</strong> {{ app.user.email }}</p>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="/admin">Panel administrateur</a>
+            {% endif %}
+        </div>
+    </div>
+
+    
+{% endblock %}
+</body>
+</html>

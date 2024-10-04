@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Admin | Garage Parrot{% endblock %}</title>
+<link rel="icon" href="{{ asset('images/logo.png') }}">
+{% block stylesheets %}
+            {{ encore_entry_link_tags('admin') }}
+{% endblock %}
+
+{% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            
+{% endblock %}
+</head>
+{% block body %}
+<header>
+        <nav>
+            <a href="/" class="logo"><img src="{{ asset('images/logo.png') }}" alt="Logo Garage Parrot"></a>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/#offer">Services</a></li>
+                    <li><a href="/occasions">Occasions</a></li>
+                </ul>
+            </div>
+            {% if (is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED')) %}
+                <a href="/account" class="cta">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            {% else %}
+                <a href="/login" class="cta">
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                    </svg>
+                </a>
+            {% endif %}
+
+        </nav>
+    </header>
+
+<div class="floating-menu">
+    <ul>
+        <li><a href="#add-car">Ajouter une voiture</a></li>
+        <li><a href="#car-list">Liste des voitures</a></li>
+        <li><a href="#moderation-comment">Modération des commentaires</a></li>
+        <li><a href="#opening-hours">Horaires d'ouverture</a></li>
+    </ul>
+</div>
+
+
+    <h1>Panel d'administration</h1>
+
+    <h2 id="add-car">Ajouter une voiture</h2>
+    {{ form_start(carForm) }}
+        {{ form_widget(carForm.post_date, {'attr': {'style': 'display:none;'}, 'value': "now"|date("Y-m-d") }) }}
+        {{ form_row(carForm) }}
+        <button type="submit">Ajouter</button>
+    {{ form_end(carForm) }}
+
+    <h2 id="car-list">Liste des voitures</h2>
+    <ul>
+        {% for car in cars %}
+            <li>{{ car.name }} - {{ car.price }} €
+                <form method="post" action="{{ path('car_delete', { 'id': car.id }) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette voiture ?');">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit">Supprimer</button>
+                </form>
+            </li>
+        {% else %}
+            <li>Aucune voiture disponible</li>
+        {% endfor %}
+    </ul>
+
+    <h2 id="moderation-comment">Modération des commentaires</h2>
+    {% for review in reviews %}
+        <div>
+        <h3>{{ review.name }}</h3>
+        <p>{{ review.comment }}</p>
+        <p>
+            {% for i in 1..review.note %}
+                ⭐
+            {% endfor %}
+        </p>
+        <form method="post" action="{{ path('app_admin') }}">
+            <input type="hidden" name="review_id" value="{{ review.id }}">
+            {% if review.approved == 0 %}
+            <button type="submit" name="action" value="approve">Approuver</button>
+            {% endif %}
+            <button type="submit" name="action" value="delete">Supprimer</button>
+        </form>
+    </div>
+    {% endfor %}
+    <h2 id="opening-hours">Horaires d'ouverture</h2>
+        <div>
+            {{ form_start(horairesForm) }}
+                {{ form_row(horairesForm.jour) }}
+                {{ form_row(horairesForm.ouverture) }}
+                {{ form_row(horairesForm.fermeture) }}
+                {{ form_widget(horairesForm.closed) }}
+                <button type="submit">Modifier</button>
+            {{ form_end(horairesForm) }}
+        </div> 
+    <h2 id="add-service">Ajouter un service</h2>
+    {{ form_start(servicesForm) }}
+        {{ form_row(servicesForm) }}
+        <button type="submit">Ajouter</button>
+    {{ form_end(servicesForm) }}
+{% endblock %}
+
+
+

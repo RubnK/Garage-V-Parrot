@@ -1,0 +1,9 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+car_delete:
+    path: /admin/car/delete/{id}
+    controller: App\Controller\AdminController::deleteCar
