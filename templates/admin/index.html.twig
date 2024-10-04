@@ -47,6 +47,7 @@
         <li><a href="#moderation-comment">Modération des commentaires</a></li>
         <li><a href="#opening-hours">Horaires d'ouverture</a></li>
         <li><a href="#add-service">Ajouter un service</a></li>
+        <li><a href="#add-user">Ajouter un utilisateur</a></li>
     </ul>
 </div>
 
@@ -99,7 +100,8 @@
                 {{ form_row(horairesForm.jour) }}
                 {{ form_row(horairesForm.ouverture) }}
                 {{ form_row(horairesForm.fermeture) }}
-                {{ form_widget(horairesForm.closed) }}
+                <label for="closed">Fermé :</label>
+                {{ form_widget(horairesForm.closed) }}<br><br>
                 <button type="submit">Modifier</button>
             {{ form_end(horairesForm) }}
         </div> 
@@ -108,6 +110,8 @@
         {{ form_row(servicesForm) }}
         <button type="submit">Ajouter</button>
     {{ form_end(servicesForm) }}
+    <h2 id="add-user">Ajouter un utilisateur</h2>
+    <p>🚧 En cours de construction, la fonctionnalité arrive bientôt ! 🚧</p>
 {% endblock %}
 
 
